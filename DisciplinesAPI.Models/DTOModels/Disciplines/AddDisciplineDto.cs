@@ -1,22 +1,11 @@
-﻿using DisciplinesAPI.Models.DBModels;
-using DisciplinesAPI.Models.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
 
-namespace DisciplinesAPI.Models
+namespace DisciplinesAPI.Models.DTOModels.Disciplines
 {
-    public class Disciplines : IEntity<Guid>
-    {
-        private byte[] plan;
-
-        [Key]
-        public Guid Id { get; set; }
-        [Required]
-        [MaxLength(20)]
+    public class AddDisciplineDto
+    {      
         public string ShortName { get; set; }
-        [Required]
-
+   
         public string FullName { get; set; }
 
         public int CountHours { get; set; }
@@ -34,11 +23,5 @@ namespace DisciplinesAPI.Models
         public DateTime DateOfPlan { get; set; }
         public int CountNorm { get; set; }
         public int Semester { get; set; }
-#nullable enable
-        public byte[]? Plan { get => plan; set => plan = value; }
-#nullable enable
-        public byte[]? GPID { get; set; }
-#nullable enable
-        public List<Lesson>? lessons { get; set; }
     }
 }

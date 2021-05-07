@@ -1,19 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DisciplinesAPI.Models.Interfaces;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace DisciplinesAPI.Models.DBModels
 {
-    public class Lesson
+    public class Lesson : IEntity<Guid>
     {
         [Key]
-        public Guid id { get; set; }
-        public string name { get; set; }
-        public string sectionName { get; set; }
-        public string themeName { get; set; }
-        public int countHours { get; set; }
-        public int currentNumberOflessonsType { get; set; }
+        public Guid Id { get; set; }
+        [Required]
+        public string Name { get; set; }
+       
+        public string SectionName { get; set; }
+        [Required]
+
+        public string ThemeName { get; set; }
+        public int CountHours { get; set; }
+        public int CurrentNumberOflessonsType { get; set; }
 #nullable enable
         public byte[]? MethodicMaterials { get; set; }
 #nullable enable
