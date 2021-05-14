@@ -33,6 +33,8 @@ namespace DisciplinesAPI.Services
 
         public async Task<IEnumerable<DisciplineDto>> GetAllAsync(int page, int count, CancellationToken cancellationToken = default)
         {
+            if (count <= 0)
+                count = 5;
             var disciplines = await _disciplinesRepository.GetAllAsync(page, count);
 
             return disciplines is null ? throw new ArgumentException() : _mapper.Map<List<DisciplineDto>>(disciplines);

@@ -33,7 +33,7 @@ namespace DisciplinesAPI.DataAccess
 
         public async Task<IEnumerable<TModel>> GetAllAsync(int page, int count, CancellationToken cancellationToken = default)
         {
-            return await _dbSet.AsNoTracking().Skip(page * count).ToListAsync();
+            return await _dbSet.AsNoTracking().Skip(page * count).Take(count).ToListAsync();
         }
 
         public async Task<TModel> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)

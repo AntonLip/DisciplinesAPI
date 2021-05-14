@@ -25,8 +25,8 @@ namespace DisciplinesAPI.Models.DBModels
         public byte[]? Presentation { get; set; }
         //Link to videos
         //Link to literature
-        public LessonType? LessonType { get; set; }
+        public LessonType LessonType { get; set; }
         
-        public Disciplines? Disciplines { get; set; }
+        public Disciplines Disciplines { get; set; }
     }
 }

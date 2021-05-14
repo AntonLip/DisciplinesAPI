@@ -49,10 +49,15 @@ namespace DisciplinesAPI
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
             services.AddControllers();
             services.AddDbContextPool<AppDbContext>(opts =>
-                opts.UseSqlServer(DbSettings.GetConnectionString()));
+                opts.UseSqlServer(_configuration["ConnectionString:Str"]));
+
+
+
+            services.AddLessonTypeTransient();
+            services.AddDisciplinesTransient();
+            services.AddLessonTransient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +71,7 @@ namespace DisciplinesAPI
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "Disciplines API 1.0");
@@ -78,6 +84,7 @@ namespace DisciplinesAPI
                 {
                     context.Response.Redirect("/swagger/");
                     return Task.CompletedTask;
+                    
                 });
                 endpoints.MapControllers();
             });
