@@ -11,7 +11,7 @@ namespace DisciplinesAPI.Models.DBModels
         public Guid Id { get; set; }
         [Required]
         [MaxLength(100)]
-        public string name { get; set; }
-        public List<Lesson> lessons { get; set; }
+        public string Name { get; set; }
+        public List<Lesson> Lessons { get; set; }
     }
 }

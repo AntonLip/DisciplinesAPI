@@ -1,8 +1,9 @@
-﻿using System;
+﻿using DisciplinesAPI.Models.Interfaces;
+using System;
 
 namespace DisciplinesAPI.Models.DTOModels.Lesson
 {
-    public class UpdateLessonDto
+    public class UpdateLessonDto : IEntityDto<Guid>
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

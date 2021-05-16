@@ -28,37 +28,37 @@ namespace DisciplinesAPI.Controllers
         }
 
         [HttpGet]
-        [Route("{disciplineId:guid}")]
+        [Route("discipline/{disciplineId:guid}")]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Get all lesson", Type = typeof(ResultDto<List<LessonDto>>))]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
-        public async Task<ActionResult<ResultDto<IEnumerable<LessonDto>>>> GetAllLessonInDiscipline(int count, int page, [FromRoute]Guid disciplinesId)
+        public async Task<ActionResult<ResultDto<IEnumerable<LessonDto>>>> GetAllLessonInDiscipline(int count, int page, [FromRoute]Guid disciplineId)
         {
-            return Ok(await _lessonService.GetAllLessonInDisciplines(page, count, disciplinesId));
+            return Ok( _lessonService.GetAllLessonInDisciplinesAsync(page, count, disciplineId));
         }
 
         [HttpGet]
         [Route("{lessonId:guid}")]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Get all lesson", Type = typeof(ResultDto<List<LessonDto>>))]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
-        public async Task<ActionResult<ResultDto<IEnumerable<LessonDto>>>> GetLessonById( [FromRoute] Guid disciplinesId)
+        public async Task<ActionResult<ResultDto<IEnumerable<LessonDto>>>> GetLessonById( [FromRoute] Guid lessonId)
         {
-            return Ok(await _lessonService.GetByIdAsync( disciplinesId));
+            return Ok(await _lessonService.GetByIdAsync(lessonId));
         }
         [HttpDelete]
         [Route("{lessonId:guid}")]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Get all lesson", Type = typeof(ResultDto<List<DisciplineDto>>))]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
-        public async Task<ActionResult<ResultDto<IEnumerable<LessonDto>>>> DeleteLesson([FromRoute] Guid disciplinesId)
+        public async Task<ActionResult<ResultDto<IEnumerable<LessonDto>>>> DeleteLesson([FromRoute] Guid lessonId)
         {
-            return Ok(await _lessonService.RemoveAsync(disciplinesId));
+            return Ok(await _lessonService.RemoveAsync(lessonId));
         }
         [HttpPut]
         [Route("{lessonId:guid}")]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Get all lesson", Type = typeof(ResultDto<List<DisciplineDto>>))]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
-        public async Task<ActionResult<ResultDto<IEnumerable<LessonDto>>>> UpdateLesson([FromRoute] Guid disciplinesId, [FromBody] UpdateLessonDto model)
+        public async Task<ActionResult<ResultDto<IEnumerable<LessonDto>>>> UpdateLesson([FromRoute] Guid lessonId, [FromBody] UpdateLessonDto model)
         {
-            return Ok(await _lessonService.UpdateAsync(disciplinesId, model));
+            return Ok(await _lessonService.UpdateAsync(lessonId, model));
         }
         [HttpPost]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Get all lesson", Type = typeof(ResultDto<List<DisciplineDto>>))]

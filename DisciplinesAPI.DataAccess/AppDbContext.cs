@@ -24,27 +24,27 @@ namespace DisciplinesAPI.DataAccess
                 new LessonType
                 {
                     Id = Guid.NewGuid(),
-                    name = "ПЗ"
+                    Name = "ПЗ"
                 },
                 new LessonType
                 {
                     Id = Guid.NewGuid(),
-                    name = "ГЗ"
+                    Name = "ГЗ"
                 },
                 new LessonType
                 {
                     Id = Guid.NewGuid(),
-                    name = "СЕМ"
+                    Name = "СЕМ"
                 },
                 new LessonType
                 {
                     Id = Guid.NewGuid(),
-                    name = "МЗ"
+                    Name = "МЗ"
                 },
                 new LessonType
                 {
                     Id = Guid.NewGuid(),
-                    name = "Лекция"
+                    Name = "Лекция"
                 }
             );
         }

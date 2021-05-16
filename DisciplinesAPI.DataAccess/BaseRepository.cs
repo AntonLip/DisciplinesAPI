@@ -13,7 +13,7 @@ namespace DisciplinesAPI.DataAccess
         where TModel : class, IEntity<Guid>
     {
         private readonly AppDbContext _context;
-        private readonly DbSet<TModel> _dbSet;
+        protected readonly DbSet<TModel> _dbSet;
 
         public BaseRepository(AppDbContext context)
         {
