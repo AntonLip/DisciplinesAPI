@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,6 +17,9 @@ namespace DisciplinesAPI.Models.Interfaces
         IEnumerable<TModel> Get(Func<TModel, bool> predicate);
 
         void RemoveAsync(TModel model, CancellationToken cancellationToken = default);
+        IEnumerable<TModel> GetWithInclude(params Expression<Func<TModel, object>>[] includeProperties);
+         IEnumerable<TModel> GetWithInclude(Func<TModel, bool> predicate,
+            params Expression<Func<TModel, object>>[] includeProperties);
 
     }
 }

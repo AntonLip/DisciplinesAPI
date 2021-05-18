@@ -8,6 +8,5 @@ namespace DisciplinesAPI.Models.Interfaces
 {
     public interface ILessonRepository : IRepository<Lesson, Guid>
     {
-        IEnumerable<Lesson> GetAllLessonInDisciplines(Guid disciplinesId, int page, int count, CancellationToken cancellationToken);
     }
 }

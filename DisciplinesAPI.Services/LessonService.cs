@@ -7,6 +7,7 @@ using DisciplinesAPI.Models.Interfaces.Repository;
 using DisciplinesAPI.Models.Interfaces.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -56,11 +57,8 @@ namespace DisciplinesAPI.Services
             if (count <= 0)
                 count = 5;
             if (id == Guid.Empty)
-                throw new ArgumentNullException();            
-
-            var result = _lessonRepository.GetAllLessonInDisciplines(id, page, count, cancellationToken);
-            if (result is null)
-                throw new ArgumentException();
+                throw new ArgumentNullException();
+            var result = _lessonRepository.GetWithInclude(l => l.Disciplines.Id == id, l => l.Disciplines, l => l.LessonType);
 
             return _mapper.Map<List<LessonDto>>(result);
         }

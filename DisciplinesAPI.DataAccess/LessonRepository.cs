@@ -17,13 +17,6 @@ namespace DisciplinesAPI.DataAccess
 
         }
 
-        public IEnumerable<Lesson> GetAllLessonInDisciplines(Guid disciplinesId, int page, int count, CancellationToken cancellationToken)
-        {
-            var result = _dbSet.Where(l => l.Disciplines.Id == disciplinesId)
-                                .Include(l => l.LessonType)
-                                .Skip(page * count).Take(count).ToList();
-            return result;
-        }
 
     }
 }
