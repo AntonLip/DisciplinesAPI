@@ -69,7 +69,7 @@ namespace DisciplinesAPI.Services
                 count = 5;
             if (id == Guid.Empty)
                 throw new ArgumentNullException();
-            var result =  _lessonRepository.Get(l => l.Disciplines.Id == id);
+            var result =  _lessonRepository.GetWithInclude(l => l.Disciplines.Id == id, );
             if (result is null)
                 throw new ArgumentException();
 

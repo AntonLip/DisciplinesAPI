@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace DisciplinesAPI.DataAccess
 {
-   public  class BaseRepository<TModel> : IRepository<TModel, Guid>
+    public class BaseRepository<TModel> : IRepository<TModel, Guid>
         where TModel : class, IEntity<Guid>
     {
         private readonly AppDbContext _context;
-        private readonly DbSet<TModel> _dbSet;
+        protected readonly DbSet<TModel> _dbSet;
 
         public BaseRepository(AppDbContext context)
         {
@@ -43,24 +43,13 @@ namespace DisciplinesAPI.DataAccess
 
         public void RemoveAsync(TModel model, CancellationToken cancellationToken = default)
         {
-              _dbSet.Remove(model);
+            _dbSet.Remove(model);
         }
 
         public async Task UpdateAsync(TModel model, CancellationToken cancellationToken = default)
         {
             _context.Entry(model).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-        }
-        public IEnumerable<TModel> GetWithInclude(params Expression<Func<TModel, object>>[] includeProperties)
-        {
-            return Include(includeProperties).ToList();
-        }
-
-        public IEnumerable<TModel> GetWithInclude(Func<TModel, bool> predicate,
-            params Expression<Func<TModel, object>>[] includeProperties)
-        {
-            var query = Include(includeProperties);
-            return query.Where(predicate).ToList();
         }
         public IEnumerable<TModel> GetWithInclude(params Expression<Func<TModel, object>>[] includeProperties)
         {
@@ -80,7 +69,6 @@ namespace DisciplinesAPI.DataAccess
             return includeProperties
                 .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
         }
-        
         public void Dispose()
         {
             _context?.Dispose();
