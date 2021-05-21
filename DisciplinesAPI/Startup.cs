@@ -51,7 +51,7 @@ namespace DisciplinesAPI
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers();
             services.AddDbContextPool<AppDbContext>(opts =>
-                opts.UseSqlServer(_configuration["ConnectionString:Str"]));
+                opts.UseSqlServer(GetConnectionString(_configuration)));
 
 
 
@@ -67,7 +67,7 @@ namespace DisciplinesAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors();
             app.UseRouting();
 
             app.UseAuthorization();
@@ -88,6 +88,27 @@ namespace DisciplinesAPI
                 });
                 endpoints.MapControllers();
             });
+        }
+
+        private  string GetConnectionString(IConfiguration configuration)
+        {
+            var isHome = bool.Parse(configuration["Place:IsHome"]);
+            string connectionString = null;
+
+            if (isHome)
+            {
+                connectionString = configuration["ConnectionString:Str"];
+            }
+            else
+            {
+                var dbServer = configuration["DbSettings:DbServer"];
+                var dbPort = configuration["DbSettings:DbPort"];
+                var dbUser = configuration["DbSettings:DbUser"];
+                var dbPassword = configuration["DbSettings:DbPassword"];
+                var database = configuration["DbSettings:Database"];
+                connectionString = $"server={dbServer},{dbPort}; Initial Catalog={database}; User ID={dbUser};Password={dbPassword}";
+            }
+            return connectionString;
         }
     }
 }
