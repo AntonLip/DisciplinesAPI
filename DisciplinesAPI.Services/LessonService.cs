@@ -2,6 +2,7 @@
 using DisciplinesAPI.Models.DBModels;
 using DisciplinesAPI.Models.DTOModels.Lesson;
 using DisciplinesAPI.Models.Interfaces;
+using DisciplinesAPI.Models.Interfaces.Repository;
 using DisciplinesAPI.Models.Interfaces.Services;
 using System;
 using System.Collections.Generic;
@@ -14,26 +15,45 @@ namespace DisciplinesAPI.Services
     public class LessonService : ILessonService
 
     {
+        private readonly ILessonTypeRepository _lessonTypeRepository;
+        private readonly IDisciplinesRepository _disciplinesRepository;
         private readonly ILessonRepository _lessonRepository;
         private readonly IMapper _mapper;
-
-        public LessonService(ILessonRepository lessonRepository, IMapper mapper)
+        public LessonService(ILessonRepository lessonRepository, IMapper mapper,
+               ILessonTypeRepository lessonTypeRepository, IDisciplinesRepository disciplinesRepository)
+            
         {
+            _disciplinesRepository = disciplinesRepository;
+            _lessonTypeRepository = lessonTypeRepository;
             _lessonRepository = lessonRepository;
             _mapper = mapper;
         }
-        public async Task<LessonDto> AddAsync(AddLessonDto model, CancellationToken cancellationToken = default)
+
+        public  async Task<LessonDto> AddAsync(AddLessonDto modelDto, CancellationToken cancellationToken = default)
         {
-            if (model is null)
+
+            if (modelDto is null)
                 throw new ArgumentNullException();
 
-            var newLesson = _mapper.Map<Lesson>(model);
+            if (modelDto.DisciplineId == Guid.Empty || modelDto.LessonTypeId == Guid.Empty)
+                throw new ArgumentNullException();
 
-            await _lessonRepository.AddAsync(newLesson);
+            var lessonType = await _lessonTypeRepository.GetByIdAsync(modelDto.LessonTypeId);
+            var disciplines = await _disciplinesRepository.GetByIdAsync(modelDto.DisciplineId);
 
-            return _mapper.Map<LessonDto>(newLesson);
+            if (lessonType is null || disciplines is null)
+                throw new ArgumentNullException();
+
+            var model = _mapper.Map<Lesson>(modelDto);
+            model.LessonType = lessonType;
+            model.Disciplines = disciplines;
+
+            await _lessonRepository.AddAsync(model, cancellationToken);
+            return _mapper.Map<LessonDto>(model);
+
+
+
         }
-
         public async Task<IEnumerable<LessonDto>> GetAllAsync(int page, int count, CancellationToken cancellationToken = default)
         {
             if (count <= 0)

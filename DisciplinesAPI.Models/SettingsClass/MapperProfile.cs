@@ -21,6 +21,8 @@ namespace TimetibleMicroservices.Models
 
             CreateMap<AddLessonDto, Lesson>().AfterMap((src, dest) => { dest.Id = Guid.NewGuid(); });
             CreateMap<UpdateLessonDto, Lesson>().ReverseMap();
+            CreateMap<Lesson, LessonDto>()
+            .ForMember(dto => dto.LessonType, conf => conf.MapFrom(ol => ol.LessonType.name));
         }
     }
 }
