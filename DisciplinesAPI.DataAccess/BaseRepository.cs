@@ -62,6 +62,17 @@ namespace DisciplinesAPI.DataAccess
             var query = Include(includeProperties);
             return query.Where(predicate).ToList();
         }
+        public IEnumerable<TModel> GetWithInclude(params Expression<Func<TModel, object>>[] includeProperties)
+        {
+            return Include(includeProperties).ToList();
+        }
+
+        public IEnumerable<TModel> GetWithInclude(Func<TModel, bool> predicate,
+            params Expression<Func<TModel, object>>[] includeProperties)
+        {
+            var query = Include(includeProperties);
+            return query.Where(predicate).ToList();
+        }
 
         private IQueryable<TModel> Include(params Expression<Func<TModel, object>>[] includeProperties)
         {
@@ -69,6 +80,7 @@ namespace DisciplinesAPI.DataAccess
             return includeProperties
                 .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
         }
+        
         public void Dispose()
         {
             _context?.Dispose();
