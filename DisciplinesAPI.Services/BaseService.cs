@@ -47,6 +47,11 @@ namespace DisciplinesAPI.Services
             return listModelDto is null ? throw new ArgumentException() : _mapper.Map<List<TModelDto>>(listModelDto);
         }
 
+        public int GetCountEntity()
+        {
+            return _repository.GetCount();
+        }
+
         public virtual async Task<TModelDto> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             if (id == Guid.Empty)

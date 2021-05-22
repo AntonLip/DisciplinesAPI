@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DisciplinesAPI.Models.DBModels
 {
+   
     public class LessonType : IEntity<Guid>
     {
         [Key]

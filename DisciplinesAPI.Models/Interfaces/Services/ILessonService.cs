@@ -3,7 +3,6 @@ using DisciplinesAPI.Models.DTOModels.Lesson;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace DisciplinesAPI.Models.Interfaces.Services
 {

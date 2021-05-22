@@ -16,7 +16,7 @@ namespace DisciplinesAPI.Models.Interfaces.Services
         Task<IEnumerable<TModelDto>> GetAllAsync(int page, int count, CancellationToken cancellationToken = default);
         Task<TModelDto> GetByIdAsync(TId id, CancellationToken cancellationToken = default);
         Task<TModelDto> UpdateAsync(TId id , TModelUpdateDto obj, CancellationToken cancellationToken = default);
-
+        int GetCountEntity();
         Task<TModelDto> RemoveAsync(TId id, CancellationToken cancellationToken = default);
     }
 }

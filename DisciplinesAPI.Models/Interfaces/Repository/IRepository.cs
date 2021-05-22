@@ -14,7 +14,8 @@ namespace DisciplinesAPI.Models.Interfaces
         Task<TModel> GetByIdAsync(TId id, CancellationToken cancellationToken = default);
         Task UpdateAsync( TModel obj, CancellationToken cancellationToken = default);
 
-        IEnumerable<TModel> Get(Func<TModel, bool> predicate);
+        public int GetCount();
+        TModel GetFirst(Func<TModel, bool> predicate);
         IEnumerable<TModel> GetWithInclude(params Expression<Func<TModel, object>>[] includeProperties);
         void RemoveAsync(TModel model, CancellationToken cancellationToken = default);
         IEnumerable<TModel> GetWithInclude(Func<TModel, bool> predicate,

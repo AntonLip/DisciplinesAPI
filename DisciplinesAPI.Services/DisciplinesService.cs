@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
 using DisciplinesAPI.Models;
 using DisciplinesAPI.Models.DTOModels.Disciplines;
-using DisciplinesAPI.Models.Interfaces;
 using DisciplinesAPI.Models.Interfaces.Repository;
 using DisciplinesAPI.Models.Interfaces.Services;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+
 
 namespace DisciplinesAPI.Services
 {

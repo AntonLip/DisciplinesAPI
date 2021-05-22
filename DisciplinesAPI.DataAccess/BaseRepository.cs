@@ -26,9 +26,9 @@ namespace DisciplinesAPI.DataAccess
             await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<TModel> Get(Func<TModel, bool> predicate)
+        public TModel GetFirst(Func<TModel, bool> predicate)
         {
-            return _dbSet.AsNoTracking().Where(predicate).ToList();
+            return _dbSet.AsNoTracking().Where(predicate).FirstOrDefault();
         }
 
         public async Task<IEnumerable<TModel>> GetAllAsync(int page, int count, CancellationToken cancellationToken = default)

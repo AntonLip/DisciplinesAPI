@@ -1,5 +1,4 @@
 ﻿using DisciplinesAPI.DataAccess;
-using DisciplinesAPI.Models.Interfaces;
 using DisciplinesAPI.Models.Interfaces.Repository;
 using DisciplinesAPI.Models.Interfaces.Services;
 using DisciplinesAPI.Services;

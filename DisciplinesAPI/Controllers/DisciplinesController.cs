@@ -33,7 +33,14 @@ namespace DisciplinesAPI.Controllers
         {
             return Ok(await _disciplinesService.GetAllAsync(page, count));
         }
-
+        [HttpGet]
+        [Route("Count")]
+        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Get disciplines lesson type", Type = typeof(ResultDto<int>))]
+        [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
+        public ActionResult<ResultDto<int>> GetCountdisciplines()
+        {
+            return Ok(_disciplinesService.GetCountEntity());
+        }
         [HttpGet]
         [Route("{disciplinesId:Guid}")]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Get discipline by id", Type = typeof(ResultDto<List<DisciplineDto>>))]

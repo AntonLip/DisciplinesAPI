@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using DisciplinesAPI.Models.DTOModels;
+﻿using DisciplinesAPI.Models.DTOModels;
 using DisciplinesAPI.Models.DTOModels.Disciplines;
 using DisciplinesAPI.Models.DTOModels.Lesson;
-using DisciplinesAPI.Models.Interfaces;
 using DisciplinesAPI.Models.Interfaces.Services;
 using DisciplinesAPI.WebApi;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +33,7 @@ namespace DisciplinesAPI.Controllers
         {
             return Ok( _lessonService.GetAllLessonInDisciplinesAsync(page, count, disciplineId));
         }
-
+        
         [HttpGet]
         [Route("{lessonId:guid}")]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Get all lesson", Type = typeof(ResultDto<List<LessonDto>>))]

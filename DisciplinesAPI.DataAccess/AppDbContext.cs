@@ -10,6 +10,7 @@ namespace DisciplinesAPI.DataAccess
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
+           
 
         }
         public DbSet<Disciplines> Disciplines { get; set; }
@@ -17,7 +18,8 @@ namespace DisciplinesAPI.DataAccess
         public DbSet<Video> Videos { get; set; }
         public DbSet<VideoCourses> VideoCourses { get; set; }
         public DbSet<LessonType> LessonTypes { get; set; }
-
+      
+      
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<LessonType>().HasData(

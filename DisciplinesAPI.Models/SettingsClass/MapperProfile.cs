@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using DisciplinesAPI.Models;
 using DisciplinesAPI.Models.DBModels;
 using DisciplinesAPI.Models.DTOModels.Disciplines;
 using DisciplinesAPI.Models.DTOModels.Lesson;
 using DisciplinesAPI.Models.DTOModels.LessonType;
 using System;
 
-namespace TimetibleMicroservices.Models
+namespace DisciplinesAPI.Models
 {
     class MapperProfile : Profile
     {
@@ -33,10 +32,20 @@ namespace TimetibleMicroservices.Models
                 });
 
             CreateMap<AddLessonDto, Lesson>()
+                .ForMember(dest => dest.LessonType,
+                    opt =>
+                    {
+                        opt.MapFrom<LessonTypeResolver>();
+                    })
+                .ForMember(dest => dest.Disciplines,
+                    opt =>
+                    {
+                        opt.MapFrom<DisciplinesResolver>();
+                    })
                 .AfterMap((src, dest) => 
-                { 
-                    dest.Id = Guid.NewGuid();
-                });
+                    { 
+                        dest.Id = Guid.NewGuid();
+                    });
             CreateMap<Lesson, LessonDto>()
                 .ForMember(dto => dto.LessonType, conf => conf.MapFrom(ol => ol.LessonType.Name));
             CreateMap<UpdateLessonDto, Lesson>().ReverseMap();

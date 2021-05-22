@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
-using DisciplinesAPI.Models;
 using DisciplinesAPI.Models.DBModels;
 using DisciplinesAPI.Models.DTOModels.Lesson;
-using DisciplinesAPI.Models.Interfaces;
 using DisciplinesAPI.Models.Interfaces.Repository;
 using DisciplinesAPI.Models.Interfaces.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -34,25 +30,12 @@ namespace DisciplinesAPI.Services
 
             if (modelDto is null)
                 throw new ArgumentNullException();
-
-            if (modelDto.DisciplineId == Guid.Empty || modelDto.LessonTypeId == Guid.Empty)
-                throw new ArgumentNullException();
-
-            var lessonType = await _lessonTypeRepository.GetByIdAsync(modelDto.LessonTypeId);
-            var disciplines = await _disciplinesRepository.GetByIdAsync(modelDto.DisciplineId);
-
-            if (lessonType is null || disciplines is null)
-                throw new ArgumentNullException();
-
+                        
             var model = _mapper.Map<Lesson>(modelDto);
-            model.LessonType = lessonType;
-            model.Disciplines = disciplines;
 
             await _lessonRepository.AddAsync(model, cancellationToken);
+
             return _mapper.Map<LessonDto>(model);
-
-
-
         }
       
 
