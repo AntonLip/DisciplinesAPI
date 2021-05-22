@@ -54,15 +54,7 @@ namespace DisciplinesAPI.Services
 
 
         }
-        public async Task<IEnumerable<LessonDto>> GetAllAsync(int page, int count, CancellationToken cancellationToken = default)
-        {
-            if (count <= 0)
-                count = 5;
-            var result = await _lessonRepository.GetAllAsync(page, count);
-
-            await _repository.AddAsync(model, cancellationToken);
-            return _mapper.Map<LessonDto>(model);
-        }
+      
 
         public  IEnumerable<LessonDto> GetAllLessonInDisciplinesAsync(int page, int count, Guid id, CancellationToken cancellationToken = default)
         {
@@ -78,46 +70,5 @@ namespace DisciplinesAPI.Services
             return _mapper.Map<List<LessonDto>>(result);
         }
 
-        public async Task<LessonDto> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        {
-            if (id == Guid.Empty)
-                throw new ArgumentNullException();
-            var result = await _lessonRepository.GetByIdAsync(id);
-
-            return result is null ? throw new ArgumentException() : _mapper.Map<LessonDto>(result);
-        }
-
-        public async Task<LessonDto> RemoveAsync(Guid id, CancellationToken cancellationToken = default)
-        {
-            if (id == Guid.Empty)
-                throw new ArgumentNullException();
-            var result = await _lessonRepository.GetByIdAsync(id);
-
-            if (result is null)
-                throw new ArgumentException();
-
-            _lessonRepository.RemoveAsync(result);
-
-            return _mapper.Map<LessonDto>(result);
-        }
-         
-        public async Task<LessonDto> UpdateAsync(Guid id, UpdateLessonDto model, CancellationToken cancellationToken = default)
-        {
-            if (id == Guid.Empty)
-                throw new ArgumentNullException();
-
-
-            if (model is null)
-                throw new ArgumentException();
-
-            if (id != model.Id)
-                throw new ArgumentException();
-
-            var updateLesson = _mapper.Map<Lesson>(model);
-
-            await _lessonRepository.UpdateAsync(updateLesson);
-
-            return _mapper.Map<LessonDto>(updateLesson);
-        }
     }
 }

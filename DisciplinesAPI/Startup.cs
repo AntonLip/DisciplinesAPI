@@ -89,25 +89,6 @@ namespace DisciplinesAPI
             });
         }
 
-        private  string GetConnectionString(IConfiguration configuration)
-        {
-            var isHome = bool.Parse(configuration["Place:IsHome"]);
-            string connectionString = null;
-
-            if (isHome)
-            {
-                connectionString = configuration["ConnectionString:Str"];
-            }
-            else
-            {
-                var dbServer = configuration["DbSettings:DbServer"];
-                var dbPort = configuration["DbSettings:DbPort"];
-                var dbUser = configuration["DbSettings:DbUser"];
-                var dbPassword = configuration["DbSettings:DbPassword"];
-                var database = configuration["DbSettings:Database"];
-                connectionString = $"server={dbServer},{dbPort}; Initial Catalog={database}; User ID={dbUser};Password={dbPassword}";
-            }
-            return connectionString;
-        }
+      
     }
 }

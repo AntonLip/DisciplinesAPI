@@ -19,28 +19,6 @@ namespace DisciplinesAPI.DataAccess.Migrations
                 .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DisciplinesAPI.Models.DBModels.Answers", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsTrue")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("QuestionsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionsId");
-
-                    b.ToTable("Answers");
-                });
-
             modelBuilder.Entity("DisciplinesAPI.Models.DBModels.Lesson", b =>
                 {
                     b.Property<Guid>("Id")
@@ -56,10 +34,10 @@ namespace DisciplinesAPI.DataAccess.Migrations
                     b.Property<int>("CurrentNumberOflessonsType")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("DisciplinesId")
+                    b.Property<Guid?>("DisciplinesId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("LessonTypeId")
+                    b.Property<Guid?>("LessonTypeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<byte[]>("MethodicMaterials")
@@ -94,7 +72,7 @@ namespace DisciplinesAPI.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -106,51 +84,29 @@ namespace DisciplinesAPI.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8aa1098e-1010-4c7f-a3c8-e244ad6a7ea2"),
-                            Name = "ПЗ"
+                            Id = new Guid("73478736-ce2e-4fd0-8bf9-b75cf8dc9d9e"),
+                            name = "ПЗ"
                         },
                         new
                         {
-                            Id = new Guid("c10db1d4-1564-46c6-9442-5e597f63fa7f"),
-                            Name = "ГЗ"
+                            Id = new Guid("23e26f72-551e-4c62-83d4-5adc6f192e71"),
+                            name = "ГЗ"
                         },
                         new
                         {
-                            Id = new Guid("02bbd981-3b45-4d4b-abc3-f4c7fc5baf56"),
-                            Name = "СЕМ"
+                            Id = new Guid("c3d9d14c-c763-4b04-936e-c81e3f8cdbe9"),
+                            name = "СЕМ"
                         },
                         new
                         {
-                            Id = new Guid("d9e3f695-70f7-4d27-8335-141969d00361"),
-                            Name = "МЗ"
+                            Id = new Guid("7db5f424-a598-483c-a7a5-353686a2f25e"),
+                            name = "МЗ"
                         },
                         new
                         {
-                            Id = new Guid("34d58776-25c9-4d05-b4c4-544aae8e201d"),
-                            Name = "Лекция"
+                            Id = new Guid("d7ecf5eb-26eb-4209-a6e3-2c73c090aad0"),
+                            name = "Лекция"
                         });
-                });
-
-            modelBuilder.Entity("DisciplinesAPI.Models.DBModels.Questions", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Difficulty")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("DisciplinesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DisciplinesId");
-
-                    b.ToTable("Questions");
                 });
 
             modelBuilder.Entity("DisciplinesAPI.Models.DBModels.Video", b =>
@@ -265,41 +221,19 @@ namespace DisciplinesAPI.DataAccess.Migrations
                     b.ToTable("Disciplines");
                 });
 
-            modelBuilder.Entity("DisciplinesAPI.Models.DBModels.Answers", b =>
-                {
-                    b.HasOne("DisciplinesAPI.Models.DBModels.Questions", "Questions")
-                        .WithMany("Answers")
-                        .HasForeignKey("QuestionsId");
-
-                    b.Navigation("Questions");
-                });
-
             modelBuilder.Entity("DisciplinesAPI.Models.DBModels.Lesson", b =>
                 {
                     b.HasOne("DisciplinesAPI.Models.Disciplines", "Disciplines")
                         .WithMany("lessons")
-                        .HasForeignKey("DisciplinesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DisciplinesId");
 
                     b.HasOne("DisciplinesAPI.Models.DBModels.LessonType", "LessonType")
-                        .WithMany("Lessons")
-                        .HasForeignKey("LessonTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("lessons")
+                        .HasForeignKey("LessonTypeId");
 
                     b.Navigation("Disciplines");
 
                     b.Navigation("LessonType");
-                });
-
-            modelBuilder.Entity("DisciplinesAPI.Models.DBModels.Questions", b =>
-                {
-                    b.HasOne("DisciplinesAPI.Models.Disciplines", "Disciplines")
-                        .WithMany("Questions")
-                        .HasForeignKey("DisciplinesId");
-
-                    b.Navigation("Disciplines");
                 });
 
             modelBuilder.Entity("DisciplinesAPI.Models.DBModels.Video", b =>
@@ -313,12 +247,7 @@ namespace DisciplinesAPI.DataAccess.Migrations
 
             modelBuilder.Entity("DisciplinesAPI.Models.DBModels.LessonType", b =>
                 {
-                    b.Navigation("Lessons");
-                });
-
-            modelBuilder.Entity("DisciplinesAPI.Models.DBModels.Questions", b =>
-                {
-                    b.Navigation("Answers");
+                    b.Navigation("lessons");
                 });
 
             modelBuilder.Entity("DisciplinesAPI.Models.DBModels.VideoCourses", b =>
@@ -329,8 +258,6 @@ namespace DisciplinesAPI.DataAccess.Migrations
             modelBuilder.Entity("DisciplinesAPI.Models.Disciplines", b =>
                 {
                     b.Navigation("lessons");
-
-                    b.Navigation("Questions");
                 });
 #pragma warning restore 612, 618
         }

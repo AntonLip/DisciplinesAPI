@@ -41,7 +41,7 @@ namespace TimetibleMicroservices.Models
                 .ForMember(dto => dto.LessonType, conf => conf.MapFrom(ol => ol.LessonType.Name));
             CreateMap<UpdateLessonDto, Lesson>().ReverseMap();
             CreateMap<Lesson, LessonDto>()
-            .ForMember(dto => dto.LessonType, conf => conf.MapFrom(ol => ol.LessonType.name));
+            .ForMember(dto => dto.LessonType, conf => conf.MapFrom(ol => ol.LessonType.Name));
         }
     }
 }

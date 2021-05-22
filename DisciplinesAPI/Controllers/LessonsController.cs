@@ -33,7 +33,7 @@ namespace DisciplinesAPI.Controllers
         [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult<ResultDto<IEnumerable<LessonDto>>>> GetAllLessonInDiscipline(int count, int page, [FromRoute]Guid disciplineId)
         {
-            return Ok(await _lessonService.GetAllLessonInDisciplines(page, count, disciplineId));
+            return Ok( _lessonService.GetAllLessonInDisciplinesAsync(page, count, disciplineId));
         }
 
         [HttpGet]

@@ -40,7 +40,7 @@ namespace DisciplinesAPI.Models
         public byte[]? GPID { get; set; }
 #nullable enable
 
-        public List<Questions>? Questions { get; set; }
-        public List<Lesson>? lessons { get; set; }
+      //  public List<Questions>? Questions { get; set; }
+        public List<Lesson>? Lessons { get; set; }
     }
 }
