@@ -47,7 +47,7 @@ namespace DisciplinesAPI.Controllers
         [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult<ResultDto<IEnumerable<DisciplineDto>>>> RemoveLessonTypes([FromRoute] Guid lessonTypeId)
         {
-            return Ok (await _lessonTypeService.Remove(lessonTypeId));
+            return Ok (await _lessonTypeService.RemoveAsync(lessonTypeId));
         }
 
         [HttpPut]
@@ -57,12 +57,12 @@ namespace DisciplinesAPI.Controllers
         public async Task<ActionResult<ResultDto<IEnumerable<DisciplineDto>>>> UpdateLessonTypes([FromRoute] Guid lessonTypeId, [FromBody] LessonTypeDto model)
         {
 
-            return Ok(await _lessonTypeService.UpdateAsync(model));
+            return Ok(await _lessonTypeService.UpdateAsync(lessonTypeId, model));
         }
         [HttpPost]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Remove lesson type", Type = typeof(ResultDto<List<LessonTypeDto>>))]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
-        public async Task<ActionResult<ResultDto<IEnumerable<DisciplineDto>>>> AddLessonTypes(AddLessonTypeDto model)
+        public async Task<ActionResult<ResultDto<IEnumerable<DisciplineDto>>>> AddLessonTypes(LessonTypeDto model)
         {
             return Ok(await _lessonTypeService.AddAsync(model));
         }

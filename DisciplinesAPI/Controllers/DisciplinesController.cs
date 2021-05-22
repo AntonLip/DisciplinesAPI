@@ -57,10 +57,8 @@ namespace DisciplinesAPI.Controllers
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Get discipline by id", Type = typeof(ResultDto<List<DisciplineDto>>))]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult<ResultDto<IEnumerable<DisciplineDto>>>> UpdateDiscipline([FromRoute] Guid disciplinesId,[FromBody] UpdateDisciplineDto model)
-        {
-            if (disciplinesId != model.Id)
-                return BadRequest("id didn't equal");
-            return Ok(await _disciplinesService.UpdateAsync(model));
+        {           
+            return Ok(await _disciplinesService.UpdateAsync(disciplinesId, model));
         }
         [HttpPost]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Get discipline by id", Type = typeof(ResultDto<List<DisciplineDto>>))]

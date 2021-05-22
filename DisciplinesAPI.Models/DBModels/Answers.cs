@@ -1,17 +1,17 @@
 ﻿using DisciplinesAPI.Models.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DisciplinesAPI.Models.DBModels
 {
-    public class LessonType : IEntity<Guid>
+    public class Answers : IEntity<Guid>
     {
         [Key]
         public Guid Id { get; set; }
-        [Required]
-        [MaxLength(100)]
+        
         public string Name { get; set; }
-        public List<Lesson> Lessons { get; set; }
+        public bool IsTrue { get; set; }
+
+        public Questions Questions { get; set; }
     }
 }

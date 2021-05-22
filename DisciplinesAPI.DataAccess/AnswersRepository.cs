@@ -3,14 +3,12 @@ using DisciplinesAPI.Models.Interfaces.Repository;
 
 namespace DisciplinesAPI.DataAccess
 {
-    public class LessonRepository : BaseRepository<Lesson>, ILessonRepository
+    public  class AnswersRepository : BaseRepository<Answers>, IAnswersRepository
     {
-        public LessonRepository(AppDbContext context)
+        public AnswersRepository(AppDbContext context)
             : base(context)
         {
 
         }
-
-
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DisciplinesAPI.Models;
 using DisciplinesAPI.Models.DBModels;
 using DisciplinesAPI.Models.DTOModels.Lesson;
 using DisciplinesAPI.Models.Interfaces;
@@ -6,30 +7,29 @@ using DisciplinesAPI.Models.Interfaces.Repository;
 using DisciplinesAPI.Models.Interfaces.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DisciplinesAPI.Services
 {
-    public class LessonService : ILessonService
+    public class LessonService : BaseService<Lesson, LessonDto, AddLessonDto, UpdateLessonDto>, ILessonService
 
     {
         private readonly ILessonTypeRepository _lessonTypeRepository;
         private readonly IDisciplinesRepository _disciplinesRepository;
         private readonly ILessonRepository _lessonRepository;
-        private readonly IMapper _mapper;
         public LessonService(ILessonRepository lessonRepository, IMapper mapper,
                ILessonTypeRepository lessonTypeRepository, IDisciplinesRepository disciplinesRepository)
-
+            : base(lessonRepository, mapper)
         {
             _disciplinesRepository = disciplinesRepository;
             _lessonTypeRepository = lessonTypeRepository;
             _lessonRepository = lessonRepository;
-            _mapper = mapper;
         }
 
-        public async Task<LessonDto> AddAsync(AddLessonDto modelDto, CancellationToken cancellationToken = default)
+        public override async Task<LessonDto> AddAsync(AddLessonDto modelDto, CancellationToken cancellationToken = default)
         {
 
             if (modelDto is null)
@@ -60,11 +60,13 @@ namespace DisciplinesAPI.Services
                 count = 5;
             var result = await _lessonRepository.GetAllAsync(page, count);
 
-            return result is null ? throw new ArgumentException() : _mapper.Map<List<LessonDto>>(result);
+            await _repository.AddAsync(model, cancellationToken);
+            return _mapper.Map<LessonDto>(model);
         }
 
-        public async Task<IEnumerable<LessonDto>> GetAllLessonInDisciplines(int page, int count, Guid id, CancellationToken cancellationToken = default)
+        public  IEnumerable<LessonDto> GetAllLessonInDisciplinesAsync(int page, int count, Guid id, CancellationToken cancellationToken = default)
         {
+
             if (count <= 0)
                 count = 5;
             if (id == Guid.Empty)

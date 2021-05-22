@@ -50,8 +50,7 @@ namespace DisciplinesAPI
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers();
-            services.AddDbContextPool<AppDbContext>(opts =>
-                opts.UseSqlServer(GetConnectionString(_configuration)));
+            services.AddDatabase(_configuration);
 
 
 

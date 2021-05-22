@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using DisciplinesAPI.Models.Interfaces;
+using System;
 
 namespace DisciplinesAPI.Models.DTOModels.Disciplines
 {
-    public class DisciplineDto
+    public class DisciplineDto : IEntityDto<Guid>
     {
         public Guid Id { get; set; }       
         public string Name { get; set; }     

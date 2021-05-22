@@ -1,16 +1,15 @@
 ﻿using DisciplinesAPI.Models.DBModels;
 using DisciplinesAPI.Models.Interfaces.Repository;
 
+
 namespace DisciplinesAPI.DataAccess
 {
-    public class LessonRepository : BaseRepository<Lesson>, ILessonRepository
+    public class QuestionsRepository : BaseRepository<Questions>, IQuestionRepository
     {
-        public LessonRepository(AppDbContext context)
+        public QuestionsRepository(AppDbContext context)
             : base(context)
         {
 
         }
-
-
     }
 }

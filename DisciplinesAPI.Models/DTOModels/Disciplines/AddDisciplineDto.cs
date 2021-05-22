@@ -1,10 +1,12 @@
-﻿using System;
+﻿using DisciplinesAPI.Models.Interfaces;
+using System;
 
 namespace DisciplinesAPI.Models.DTOModels.Disciplines
 {
-    public class AddDisciplineDto
-    {      
-        public string ShortName { get; set; }
+    public class AddDisciplineDto : IEntityDto<Guid>
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
    
         public string FullName { get; set; }
 

@@ -2,16 +2,19 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace DisciplinesAPI.Models.DBModels
 {
-    public class LessonType : IEntity<Guid>
+    public class Questions : IEntity<Guid>
     {
         [Key]
         public Guid Id { get; set; }
-        [Required]
-        [MaxLength(100)]
         public string Name { get; set; }
-        public List<Lesson> Lessons { get; set; }
+        public int Difficulty { get; set; }
+
+        public Disciplines Disciplines { get; set; }
+        public List<Answers> Answers{ get; set; }
+
     }
 }
