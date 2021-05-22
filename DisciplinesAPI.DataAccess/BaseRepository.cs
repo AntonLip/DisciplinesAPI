@@ -55,7 +55,10 @@ namespace DisciplinesAPI.DataAccess
         {
             return Include(includeProperties).ToList();
         }
-
+        public int GetCount()
+        {
+            return _dbSet.Count();
+        }
         public IEnumerable<TModel> GetWithInclude(Func<TModel, bool> predicate,
             params Expression<Func<TModel, object>>[] includeProperties)
         {

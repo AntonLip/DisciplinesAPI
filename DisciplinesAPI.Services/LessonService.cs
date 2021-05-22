@@ -21,7 +21,7 @@ namespace DisciplinesAPI.Services
         private readonly IMapper _mapper;
         public LessonService(ILessonRepository lessonRepository, IMapper mapper,
                ILessonTypeRepository lessonTypeRepository, IDisciplinesRepository disciplinesRepository)
-            
+
         {
             _disciplinesRepository = disciplinesRepository;
             _lessonTypeRepository = lessonTypeRepository;
@@ -29,7 +29,7 @@ namespace DisciplinesAPI.Services
             _mapper = mapper;
         }
 
-        public  async Task<LessonDto> AddAsync(AddLessonDto modelDto, CancellationToken cancellationToken = default)
+        public async Task<LessonDto> AddAsync(AddLessonDto modelDto, CancellationToken cancellationToken = default)
         {
 
             if (modelDto is null)
@@ -69,7 +69,7 @@ namespace DisciplinesAPI.Services
                 count = 5;
             if (id == Guid.Empty)
                 throw new ArgumentNullException();
-            var result =  _lessonRepository.GetWithInclude(l => l.Disciplines.Id == id, );
+            var result = _lessonRepository.GetWithInclude(l => l.Disciplines.Id == id, l => l.Disciplines, l => l.LessonType);
             if (result is null)
                 throw new ArgumentException();
 
@@ -98,7 +98,7 @@ namespace DisciplinesAPI.Services
 
             return _mapper.Map<LessonDto>(result);
         }
-
+         
         public async Task<LessonDto> UpdateAsync(Guid id, UpdateLessonDto model, CancellationToken cancellationToken = default)
         {
             if (id == Guid.Empty)
