@@ -49,10 +49,15 @@ namespace DisciplinesAPI
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
             services.AddControllers();
             services.AddDbContextPool<AppDbContext>(opts =>
-                opts.UseSqlServer(DbSettings.GetConnectionString()));
+                opts.UseSqlServer(GetConnectionString(_configuration)));
+
+
+
+            services.AddLessonTypeTransient();
+            services.AddDisciplinesTransient();
+            services.AddLessonTransient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,10 +67,11 @@ namespace DisciplinesAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors();
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "Disciplines API 1.0");
@@ -78,9 +84,31 @@ namespace DisciplinesAPI
                 {
                     context.Response.Redirect("/swagger/");
                     return Task.CompletedTask;
+                    
                 });
                 endpoints.MapControllers();
             });
+        }
+
+        private  string GetConnectionString(IConfiguration configuration)
+        {
+            var isHome = bool.Parse(configuration["Place:IsHome"]);
+            string connectionString = null;
+
+            if (isHome)
+            {
+                connectionString = configuration["ConnectionString:Str"];
+            }
+            else
+            {
+                var dbServer = configuration["DbSettings:DbServer"];
+                var dbPort = configuration["DbSettings:DbPort"];
+                var dbUser = configuration["DbSettings:DbUser"];
+                var dbPassword = configuration["DbSettings:DbPassword"];
+                var database = configuration["DbSettings:Database"];
+                connectionString = $"server={dbServer},{dbPort}; Initial Catalog={database}; User ID={dbUser};Password={dbPassword}";
+            }
+            return connectionString;
         }
     }
 }
