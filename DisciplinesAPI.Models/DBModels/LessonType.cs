@@ -14,6 +14,8 @@ namespace DisciplinesAPI.Models.DBModels
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }
+        public bool IsDeleted { get; set; }
+
         public List<Lesson> Lessons { get; set; }
     }
 }

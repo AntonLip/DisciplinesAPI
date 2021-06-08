@@ -12,5 +12,7 @@ namespace DisciplinesAPI.Models.Interfaces
         /// </summary>
         /// <value>The identifier.</value>
         public TId Id { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

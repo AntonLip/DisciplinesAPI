@@ -8,7 +8,8 @@ namespace DisciplinesAPI.Models.DBModels
     {
         [Key]
         public Guid Id { get; set; }
-        
+        public bool IsDeleted { get; set; }
+
         public string Name { get; set; }
         public bool IsTrue { get; set; }
 

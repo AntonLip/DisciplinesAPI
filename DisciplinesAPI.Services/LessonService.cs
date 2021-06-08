@@ -23,23 +23,7 @@ namespace DisciplinesAPI.Services
             _disciplinesRepository = disciplinesRepository;
             _lessonTypeRepository = lessonTypeRepository;
             _lessonRepository = lessonRepository;
-        }
-
-        public override async Task<LessonDto> AddAsync(AddLessonDto modelDto, CancellationToken cancellationToken = default)
-        {
-
-            if (modelDto is null)
-                throw new ArgumentNullException();
-                        
-            var model = _mapper.Map<Lesson>(modelDto);
-            var type = _lessonTypeRepository.GetFirst(l => l.Name == modelDto.LessonType);
-            model.LessonTypeId = type.Id;
-            model.LessonType = null;
-            await _lessonRepository.AddAsync(model, cancellationToken);
-
-            return _mapper.Map<LessonDto>(model);
-        }
-      
+        }      
 
         public  IEnumerable<LessonDto> GetAllLessonInDisciplinesAsync(int page, int count, Guid id, CancellationToken cancellationToken = default)
         {
@@ -49,6 +33,7 @@ namespace DisciplinesAPI.Services
             if (id == Guid.Empty)
                 throw new ArgumentNullException();
             var result = _lessonRepository.GetWithInclude(l => l.Disciplines.Id == id, l => l.Disciplines, l => l.LessonType);
+
             if (result is null)
                 throw new ArgumentException();
 

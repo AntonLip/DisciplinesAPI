@@ -14,6 +14,7 @@ namespace DisciplinesAPI.Models.DBModels
         public string Name { get; set; }
         public string Info { get; set; }
 
+        public bool IsDeleted { get; set; }
 
         public List<Video> Video { get; set; }
     }
