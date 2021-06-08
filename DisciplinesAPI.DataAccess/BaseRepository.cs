@@ -33,17 +33,18 @@ namespace DisciplinesAPI.DataAccess
 
         public async Task<IEnumerable<TModel>> GetAllAsync(int page, int count, CancellationToken cancellationToken = default)
         {
-            return await _dbSet.AsNoTracking().Skip(page * count).Take(count).ToListAsync();
+            return await _dbSet.AsNoTracking().Skip(page * count).Take(count).Where(l=>l.IsDeleted == false).ToListAsync();
         }
 
         public async Task<TModel> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            return await _dbSet.FindAsync(id);
+            return await _dbSet.Where(l => l.IsDeleted == false).FirstAsync(l=>l.Id==id) ;
         }
 
-        public void RemoveAsync(TModel model, CancellationToken cancellationToken = default)
+        public async Task RemoveAsync(TModel model, CancellationToken cancellationToken = default)
         {
-            _dbSet.Remove(model);
+            _context.Entry(model).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(TModel model, CancellationToken cancellationToken = default)
@@ -70,7 +71,7 @@ namespace DisciplinesAPI.DataAccess
         {
             IQueryable<TModel> query = _dbSet.AsNoTracking();
             return includeProperties
-                .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+                .Aggregate(query, (current, includeProperty) => current.Include(includeProperty).Where(l=>l.IsDeleted == false));
         }
         public void Dispose()
         {

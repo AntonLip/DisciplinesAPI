@@ -71,8 +71,10 @@ namespace DisciplinesAPI.Services
 
             if (model is null)
                 throw new ArgumentException();
-                
-            _repository.RemoveAsync(model, cancellationToken);
+
+
+           model.IsDeleted = true;
+           await _repository.UpdateAsync(model, cancellationToken);
 
             return _mapper.Map<TModelDto>(model);
         }

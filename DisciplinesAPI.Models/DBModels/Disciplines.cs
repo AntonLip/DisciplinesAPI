@@ -39,8 +39,9 @@ namespace DisciplinesAPI.Models
 #nullable enable
         public byte[]? GPID { get; set; }
 #nullable enable
+        public bool IsDeleted { get; set; }
 
-      //  public List<Questions>? Questions { get; set; }
+        //  public List<Questions>? Questions { get; set; }
         public List<Lesson>? Lessons { get; set; }
     }
 }

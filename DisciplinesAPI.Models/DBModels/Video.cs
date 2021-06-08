@@ -14,5 +14,7 @@ namespace DisciplinesAPI.Models.DBModels
         [Required]
         public string Path { get; set; }
         public VideoCourses VideoCourses { get; set; }
+        public bool IsDeleted { get; set; }
+
     }
 }

@@ -19,7 +19,8 @@ namespace DisciplinesAPI.Models
             {
                 
                 var lessonType =  _lessonTypeRepository.GetFirst(l=> l.Name == source.LessonType);
-                return lessonType;
+                destination.LessonTypeId = lessonType.Id;
+                return null;
             }
             catch
             {

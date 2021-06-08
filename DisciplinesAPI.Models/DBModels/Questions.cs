@@ -12,6 +12,7 @@ namespace DisciplinesAPI.Models.DBModels
         public Guid Id { get; set; }
         public string Name { get; set; }
         public int Difficulty { get; set; }
+        public bool IsDeleted { get; set; }
 
         public Disciplines Disciplines { get; set; }
         public List<Answers> Answers{ get; set; }

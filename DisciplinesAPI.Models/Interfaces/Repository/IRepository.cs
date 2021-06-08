@@ -17,7 +17,7 @@ namespace DisciplinesAPI.Models.Interfaces
         public int GetCount();
         TModel GetFirst(Func<TModel, bool> predicate);
         IEnumerable<TModel> GetWithInclude(params Expression<Func<TModel, object>>[] includeProperties);
-        void RemoveAsync(TModel model, CancellationToken cancellationToken = default);
+        Task RemoveAsync(TModel model, CancellationToken cancellationToken = default);
         IEnumerable<TModel> GetWithInclude(Func<TModel, bool> predicate,
             params Expression<Func<TModel, object>>[] includeProperties);
 
