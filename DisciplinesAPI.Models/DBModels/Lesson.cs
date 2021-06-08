@@ -1,6 +1,7 @@
 ﻿using DisciplinesAPI.Models.Interfaces;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DisciplinesAPI.Models.DBModels
 {
@@ -25,6 +26,8 @@ namespace DisciplinesAPI.Models.DBModels
         public byte[]? Presentation { get; set; }
         //Link to videos
         //Link to literature
+        [ForeignKey("LessonType")]
+        public Guid LessonTypeId { get; set; }
         public LessonType LessonType { get; set; }
         
         public Disciplines Disciplines { get; set; }

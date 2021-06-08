@@ -32,7 +32,9 @@ namespace DisciplinesAPI.Services
                 throw new ArgumentNullException();
                         
             var model = _mapper.Map<Lesson>(modelDto);
-
+            var type = _lessonTypeRepository.GetFirst(l => l.Name == modelDto.LessonType);
+            model.LessonTypeId = type.Id;
+            model.LessonType = null;
             await _lessonRepository.AddAsync(model, cancellationToken);
 
             return _mapper.Map<LessonDto>(model);
