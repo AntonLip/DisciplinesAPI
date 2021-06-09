@@ -3,6 +3,7 @@ using DisciplinesAPI.Models.DTOModels.Disciplines;
 using DisciplinesAPI.Models.DTOModels.Lesson;
 using DisciplinesAPI.Models.Interfaces.Services;
 using DisciplinesAPI.WebApi;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.Swagger.Annotations;
 using System;
@@ -65,6 +66,13 @@ namespace DisciplinesAPI.Controllers
         {
             return Ok(await _lessonService.AddAsync(model));
         }
-
+        [HttpPost]
+        [Route("{lessonId:guid}/{typeFile}")]
+        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Get all lesson", Type = typeof(ResultDto<List<DisciplineDto>>))]
+        [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
+        public async Task AddFiles([FromRoute] Guid lessonId, [FromForm]IFormFile body, [FromRoute] string typeFile)
+        {
+            await _lessonService.AddFiles(lessonId, body, typeFile);
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace DisciplinesAPI.DataAccess
     public class BaseRepository<TModel> : IRepository<TModel, Guid>
         where TModel : class, IEntity<Guid>
     {
-        private readonly AppDbContext _context;
+        protected readonly AppDbContext _context;
         protected readonly DbSet<TModel> _dbSet;
 
         public BaseRepository(AppDbContext context)
@@ -33,7 +33,7 @@ namespace DisciplinesAPI.DataAccess
 
         public async Task<IEnumerable<TModel>> GetAllAsync(int page, int count, CancellationToken cancellationToken = default)
         {
-            return await _dbSet.AsNoTracking().Skip(page * count).Take(count).Where(l=>l.IsDeleted == false).ToListAsync();
+            return await _dbSet.AsNoTracking().Where(l => l.IsDeleted == false).OrderBy(l=>l.Id).Skip(page * count).Take(count).ToListAsync();
         }
 
         public async Task<TModel> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)

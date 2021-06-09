@@ -3,6 +3,7 @@ using DisciplinesAPI.Models.DBModels;
 using DisciplinesAPI.Models.DTOModels.Lesson;
 using DisciplinesAPI.Models.Interfaces.Repository;
 using DisciplinesAPI.Models.Interfaces.Services;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -13,17 +14,24 @@ namespace DisciplinesAPI.Services
     public class LessonService : BaseService<Lesson, LessonDto, AddLessonDto, UpdateLessonDto>, ILessonService
 
     {
-        private readonly ILessonTypeRepository _lessonTypeRepository;
-        private readonly IDisciplinesRepository _disciplinesRepository;
         private readonly ILessonRepository _lessonRepository;
-        public LessonService(ILessonRepository lessonRepository, IMapper mapper,
-               ILessonTypeRepository lessonTypeRepository, IDisciplinesRepository disciplinesRepository)
+        public LessonService(ILessonRepository lessonRepository, IMapper mapper)
             : base(lessonRepository, mapper)
         {
-            _disciplinesRepository = disciplinesRepository;
-            _lessonTypeRepository = lessonTypeRepository;
+            
             _lessonRepository = lessonRepository;
-        }      
+        }
+
+        public Task AddFiles(Guid id, IFormFile body, string typeFile, CancellationToken cancellationToken = default)
+        {
+            if (id == Guid.Empty)
+                throw new ArgumentNullException();
+            if(body is null)
+                throw new ArgumentNullException();
+
+            return _lessonRepository.AddFiles(id, body, typeFile, cancellationToken);
+   }
+
 
         public  IEnumerable<LessonDto> GetAllLessonInDisciplinesAsync(int page, int count, Guid id, CancellationToken cancellationToken = default)
         {
