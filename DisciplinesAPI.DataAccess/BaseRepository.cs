@@ -12,7 +12,7 @@ namespace DisciplinesAPI.DataAccess
     public class BaseRepository<TModel> : IRepository<TModel, Guid>
         where TModel : class, IEntity<Guid>
     {
-        private readonly AppDbContext _context;
+        protected readonly AppDbContext _context;
         protected readonly DbSet<TModel> _dbSet;
 
         public BaseRepository(AppDbContext context)
@@ -33,7 +33,7 @@ namespace DisciplinesAPI.DataAccess
 
         public async Task<IEnumerable<TModel>> GetAllAsync(int page, int count, CancellationToken cancellationToken = default)
         {
-            return await _dbSet.AsNoTracking().Skip(page * count).Take(count).Where(l=>l.IsDeleted == false).ToListAsync();
+            return await _dbSet.AsNoTracking().Where(l => l.IsDeleted == false).OrderBy(l=>l.Id).Skip(page * count).Take(count).ToListAsync();
         }
 
         public async Task<TModel> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
@@ -52,7 +52,7 @@ namespace DisciplinesAPI.DataAccess
             _context.Entry(model).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
-        public IEnumerable<TModel> GetWithInclude(params Expression<Func<TModel, object>>[] includeProperties)
+        public List<TModel> GetWithInclude(params Expression<Func<TModel, object>>[] includeProperties)
         {
             return Include(includeProperties).ToList();
         }
@@ -60,7 +60,7 @@ namespace DisciplinesAPI.DataAccess
         {
             return _dbSet.Count();
         }
-        public IEnumerable<TModel> GetWithInclude(Func<TModel, bool> predicate,
+        public List<TModel> GetWithInclude(Func<TModel, bool> predicate,
             params Expression<Func<TModel, object>>[] includeProperties)
         {
             var query = Include(includeProperties);
