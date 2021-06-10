@@ -52,7 +52,7 @@ namespace DisciplinesAPI.DataAccess
             _context.Entry(model).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
-        public IEnumerable<TModel> GetWithInclude(params Expression<Func<TModel, object>>[] includeProperties)
+        public List<TModel> GetWithInclude(params Expression<Func<TModel, object>>[] includeProperties)
         {
             return Include(includeProperties).ToList();
         }
@@ -60,7 +60,7 @@ namespace DisciplinesAPI.DataAccess
         {
             return _dbSet.Count();
         }
-        public IEnumerable<TModel> GetWithInclude(Func<TModel, bool> predicate,
+        public List<TModel> GetWithInclude(Func<TModel, bool> predicate,
             params Expression<Func<TModel, object>>[] includeProperties)
         {
             var query = Include(includeProperties);

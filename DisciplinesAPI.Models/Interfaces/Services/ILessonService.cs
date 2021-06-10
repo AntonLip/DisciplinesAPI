@@ -1,4 +1,5 @@
 ﻿using DisciplinesAPI.Models.DBModels;
+using DisciplinesAPI.Models.DTOModels;
 using DisciplinesAPI.Models.DTOModels.Lesson;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -13,5 +14,7 @@ namespace DisciplinesAPI.Models.Interfaces.Services
         IEnumerable<LessonDto> GetAllLessonInDisciplinesAsync(int page, int count, Guid id, CancellationToken cancellationToken = default);
 
         Task AddFiles(Guid id, IFormFile body, string typeFile, CancellationToken cancellationToken = default);
+
+        Task<FileDto> GetFiles(Guid id, string typeFile, CancellationToken cancellationToken = default);
     }
 }

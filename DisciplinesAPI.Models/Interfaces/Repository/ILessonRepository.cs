@@ -1,4 +1,5 @@
 ﻿using DisciplinesAPI.Models.DBModels;
+using DisciplinesAPI.Models.DTOModels;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Threading;

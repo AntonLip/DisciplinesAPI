@@ -74,5 +74,15 @@ namespace DisciplinesAPI.Controllers
         {
             await _lessonService.AddFiles(lessonId, body, typeFile);
         }
+
+        [HttpGet]
+        [Route("{lessonId:guid}/{typeFile}")]
+        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Get all lesson", Type = typeof(ResultDto<List<DisciplineDto>>))]
+        [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> GetFilesAsync([FromRoute] Guid lessonId,  [FromRoute] string typeFile)
+        {
+            var result = await _lessonService.GetFiles(lessonId, typeFile);
+            return File(result.FileBytes, result.FileType, result.FileName);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DisciplinesAPI.Models.DBModels;
+using DisciplinesAPI.Models.DTOModels;
 using DisciplinesAPI.Models.Interfaces.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -41,11 +42,12 @@ namespace DisciplinesAPI.DataAccess
                         lesson.AdditionalMaterial = fileBytes;
                         break;
                     default:
-                         throw new  ArgumentException();
+                        throw new ArgumentException();
                 }
                 _context.Entry(lesson).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
         }
+      
     }
 }
