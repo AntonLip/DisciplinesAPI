@@ -2,6 +2,7 @@
 using DisciplinesAPI.Models.DTOModels.Disciplines;
 using DisciplinesAPI.Models.Interfaces.Services;
 using DisciplinesAPI.WebApi;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.Swagger.Annotations;
 using System;
@@ -74,6 +75,24 @@ namespace DisciplinesAPI.Controllers
         {
             
             return Ok(await _disciplinesService.AddAsync(model));
+        }
+        [HttpPost]
+        [Route("{disciplinesId:guid}/{typeFile}")]
+        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Save file in db", Type = typeof(ResultDto<List<DisciplineDto>>))]
+        [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
+        public async Task AddFiles([FromRoute] Guid disciplinesId, [FromForm] IFormFile body, [FromRoute] string typeFile)
+        {
+            await _disciplinesService.AddFiles(disciplinesId, body, typeFile);
+        }
+
+        [HttpGet]
+        [Route("{disciplinesId:guid}/{typeFile}")]
+        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Get file", Type = typeof(ResultDto<List<DisciplineDto>>))]
+        [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> GetFilesAsync([FromRoute] Guid disciplinesId, [FromRoute] string typeFile)
+        {
+            var result = await _disciplinesService.GetFiles(disciplinesId, typeFile);
+            return File(result.FileBytes, result.FileType, result.FileName);
         }
     }
 }

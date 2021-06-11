@@ -68,7 +68,7 @@ namespace DisciplinesAPI.Controllers
         }
         [HttpPost]
         [Route("{lessonId:guid}/{typeFile}")]
-        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Get all lesson", Type = typeof(ResultDto<List<DisciplineDto>>))]
+        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Save file in db", Type = typeof(ResultDto<List<DisciplineDto>>))]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
         public async Task AddFiles([FromRoute] Guid lessonId, [FromForm]IFormFile body, [FromRoute] string typeFile)
         {
@@ -77,7 +77,7 @@ namespace DisciplinesAPI.Controllers
 
         [HttpGet]
         [Route("{lessonId:guid}/{typeFile}")]
-        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Get all lesson", Type = typeof(ResultDto<List<DisciplineDto>>))]
+        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Get file", Type = typeof(ResultDto<List<DisciplineDto>>))]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetFilesAsync([FromRoute] Guid lessonId,  [FromRoute] string typeFile)
         {

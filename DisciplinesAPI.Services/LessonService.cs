@@ -18,7 +18,7 @@ namespace DisciplinesAPI.Services
         private readonly ILessonRepository _lessonRepository;
         public LessonService(ILessonRepository lessonRepository, IMapper mapper)
             : base(lessonRepository, mapper)
-        {            
+        {
             _lessonRepository = lessonRepository;
         }
 
@@ -26,13 +26,13 @@ namespace DisciplinesAPI.Services
         {
             if (id == Guid.Empty)
                 throw new ArgumentNullException();
-            if(body is null)
+            if (body is null)
                 throw new ArgumentNullException();
 
             return _lessonRepository.AddFiles(id, body, typeFile, cancellationToken);
-   }
+        }
 
-        public  IEnumerable<LessonDto> GetAllLessonInDisciplinesAsync(int page, int count, Guid id, CancellationToken cancellationToken = default)
+        public IEnumerable<LessonDto> GetAllLessonInDisciplinesAsync(int page, int count, Guid id, CancellationToken cancellationToken = default)
         {
 
             if (count <= 0)
@@ -52,14 +52,14 @@ namespace DisciplinesAPI.Services
             if (id == Guid.Empty)
                 throw new ArgumentNullException();
 
-            var lesson =  _lessonRepository.GetWithInclude(l => l.Id == id, l => l.LessonType).Find(l => l.Id == id);         
+            var lesson = _lessonRepository.GetWithInclude(l => l.Id == id, l => l.LessonType).Find(l => l.Id == id);
 
             if (lesson is null)
                 throw new ArgumentNullException();
 
             FileDto fileDto = new FileDto();
-            
-            
+
+
             switch (typeFile)
             {
                 case "methodic":
@@ -70,12 +70,12 @@ namespace DisciplinesAPI.Services
                 case "presentation":
                     fileDto.FileBytes = lesson.Presentation;
                     fileDto.FileType = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
-                    fileDto.FileName = string.Format("{0} {1}.pptx", lesson.LessonType, lesson.CurrentNumberOflessonsType);
+                    fileDto.FileName = string.Format("{0} {1}.pptx", lesson.LessonType.Name, lesson.CurrentNumberOflessonsType);
                     break;
                 case "additional":
                     fileDto.FileBytes = lesson.AdditionalMaterial;
                     fileDto.FileType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-                    fileDto.FileName = string.Format("{0} {1}.docx", lesson.LessonType, lesson.CurrentNumberOflessonsType);
+                    fileDto.FileName = string.Format("{0} {1}.docx", lesson.LessonType.Name, lesson.CurrentNumberOflessonsType);
                     break;
                 default:
                     throw new ArgumentException();

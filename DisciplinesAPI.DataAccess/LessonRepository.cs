@@ -1,5 +1,4 @@
 ﻿using DisciplinesAPI.Models.DBModels;
-using DisciplinesAPI.Models.DTOModels;
 using DisciplinesAPI.Models.Interfaces.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
