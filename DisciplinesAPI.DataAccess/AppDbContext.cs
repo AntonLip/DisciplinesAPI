@@ -15,11 +15,14 @@ namespace DisciplinesAPI.DataAccess
         }
         public DbSet<Disciplines> Disciplines { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
-        public DbSet<Video> Videos { get; set; }
-        public DbSet<VideoCourses> VideoCourses { get; set; }
         public DbSet<LessonType> LessonTypes { get; set; }
-      
-      
+        public DbSet<Questions> Questions { get; set; }
+        public DbSet<Answers> Answers { get; set; }
+
+
+
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<LessonType>().HasData(

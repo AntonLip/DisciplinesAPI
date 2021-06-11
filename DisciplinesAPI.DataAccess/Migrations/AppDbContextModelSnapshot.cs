@@ -19,6 +19,31 @@ namespace DisciplinesAPI.DataAccess.Migrations
                 .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DisciplinesAPI.Models.DBModels.Answers", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsTrue")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("QuestionsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionsId");
+
+                    b.ToTable("Answers");
+                });
+
             modelBuilder.Entity("DisciplinesAPI.Models.DBModels.Lesson", b =>
                 {
                     b.Property<Guid>("Id")
@@ -90,84 +115,59 @@ namespace DisciplinesAPI.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2cb8a9d0-3f00-4f38-8a66-65403f3a0fe2"),
+                            Id = new Guid("215819a9-97c1-4ac1-bca6-0ae78d2a4074"),
                             IsDeleted = false,
                             Name = "ПЗ"
                         },
                         new
                         {
-                            Id = new Guid("9da7f782-3978-49f4-ba90-bb042e94ef3c"),
+                            Id = new Guid("3efe08e5-c66f-4579-a3a0-7faa56750c67"),
                             IsDeleted = false,
                             Name = "ГЗ"
                         },
                         new
                         {
-                            Id = new Guid("f3ccdee6-c89b-4eb9-b7ff-01c7101df404"),
+                            Id = new Guid("1685b84d-51a2-491c-9823-99ff16cc0a54"),
                             IsDeleted = false,
                             Name = "СЕМ"
                         },
                         new
                         {
-                            Id = new Guid("2de4aa61-c511-4d6b-a451-0760a61e550e"),
+                            Id = new Guid("bdb79589-858d-4c10-bf89-5ef8b04c4a53"),
                             IsDeleted = false,
                             Name = "МЗ"
                         },
                         new
                         {
-                            Id = new Guid("a2818899-4c4d-4e88-a1cc-f24bf956e826"),
+                            Id = new Guid("5e5b108f-731d-4a35-ae1c-c8c7b955e963"),
                             IsDeleted = false,
                             Name = "Лекция"
                         });
                 });
 
-            modelBuilder.Entity("DisciplinesAPI.Models.DBModels.Video", b =>
+            modelBuilder.Entity("DisciplinesAPI.Models.DBModels.Questions", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Difficulty")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("DisciplinesId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("Path")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("VideoCoursesId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VideoCoursesId");
+                    b.HasIndex("DisciplinesId");
 
-                    b.ToTable("Videos");
-                });
-
-            modelBuilder.Entity("DisciplinesAPI.Models.DBModels.VideoCourses", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Info")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("VideoCourses");
+                    b.ToTable("Questions");
                 });
 
             modelBuilder.Entity("DisciplinesAPI.Models.Disciplines", b =>
@@ -241,6 +241,17 @@ namespace DisciplinesAPI.DataAccess.Migrations
                     b.ToTable("Disciplines");
                 });
 
+            modelBuilder.Entity("DisciplinesAPI.Models.DBModels.Answers", b =>
+                {
+                    b.HasOne("DisciplinesAPI.Models.DBModels.Questions", "Questions")
+                        .WithMany("Answers")
+                        .HasForeignKey("QuestionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Questions");
+                });
+
             modelBuilder.Entity("DisciplinesAPI.Models.DBModels.Lesson", b =>
                 {
                     b.HasOne("DisciplinesAPI.Models.Disciplines", "Disciplines")
@@ -260,13 +271,15 @@ namespace DisciplinesAPI.DataAccess.Migrations
                     b.Navigation("LessonType");
                 });
 
-            modelBuilder.Entity("DisciplinesAPI.Models.DBModels.Video", b =>
+            modelBuilder.Entity("DisciplinesAPI.Models.DBModels.Questions", b =>
                 {
-                    b.HasOne("DisciplinesAPI.Models.DBModels.VideoCourses", "VideoCourses")
-                        .WithMany("Video")
-                        .HasForeignKey("VideoCoursesId");
+                    b.HasOne("DisciplinesAPI.Models.Disciplines", "Disciplines")
+                        .WithMany()
+                        .HasForeignKey("DisciplinesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("VideoCourses");
+                    b.Navigation("Disciplines");
                 });
 
             modelBuilder.Entity("DisciplinesAPI.Models.DBModels.LessonType", b =>
@@ -274,9 +287,9 @@ namespace DisciplinesAPI.DataAccess.Migrations
                     b.Navigation("Lessons");
                 });
 
-            modelBuilder.Entity("DisciplinesAPI.Models.DBModels.VideoCourses", b =>
+            modelBuilder.Entity("DisciplinesAPI.Models.DBModels.Questions", b =>
                 {
-                    b.Navigation("Video");
+                    b.Navigation("Answers");
                 });
 
             modelBuilder.Entity("DisciplinesAPI.Models.Disciplines", b =>

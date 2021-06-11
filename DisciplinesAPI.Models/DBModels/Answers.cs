@@ -1,6 +1,7 @@
 ﻿using DisciplinesAPI.Models.Interfaces;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DisciplinesAPI.Models.DBModels
 {
@@ -12,7 +13,8 @@ namespace DisciplinesAPI.Models.DBModels
 
         public string Name { get; set; }
         public bool IsTrue { get; set; }
-
+        [ForeignKey("Questions")]
+        public Guid QuestionsId { get; set; }
         public Questions Questions { get; set; }
     }
 }

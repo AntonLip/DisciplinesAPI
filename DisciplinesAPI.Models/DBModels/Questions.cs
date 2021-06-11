@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DisciplinesAPI.Models.DBModels
 {
@@ -13,7 +13,8 @@ namespace DisciplinesAPI.Models.DBModels
         public string Name { get; set; }
         public int Difficulty { get; set; }
         public bool IsDeleted { get; set; }
-
+        [ForeignKey("Disciplines")]
+        public Guid DisciplinesId { get; set; }
         public Disciplines Disciplines { get; set; }
         public List<Answers> Answers{ get; set; }
 
