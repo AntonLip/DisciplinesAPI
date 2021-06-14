@@ -33,6 +33,7 @@ namespace DisciplinesAPI.Services
                 throw new ArgumentNullException();
 
             var model = _mapper.Map<TModel>(modelDto);
+            
             await _repository.AddAsync(model, cancellationToken);
             return _mapper.Map<TModelDto>(model);
         }

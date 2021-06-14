@@ -3,7 +3,9 @@ using DisciplinesAPI.Models.DBModels;
 using DisciplinesAPI.Models.DTOModels.Disciplines;
 using DisciplinesAPI.Models.DTOModels.Lesson;
 using DisciplinesAPI.Models.DTOModels.LessonType;
+using DisciplinesAPI.Models.DTOModels.Test;
 using System;
+using System.Collections.Generic;
 
 namespace DisciplinesAPI.Models
 {
@@ -51,6 +53,24 @@ namespace DisciplinesAPI.Models
             CreateMap<UpdateLessonDto, Lesson>().ReverseMap();
             CreateMap<Lesson, LessonDto>()
             .ForMember(dto => dto.LessonType, conf => conf.MapFrom(ol => ol.LessonType.Name));
+
+            CreateMap<Questions, QuestionsDto>();
+            CreateMap<AddQuestionDto, Questions>()
+                .AfterMap((src, dest) =>
+                {
+                    dest.Id = Guid.NewGuid();
+                    foreach(var a in dest.Answers)
+                    {
+                        a.Questions = dest;
+                    }
+                });
+            CreateMap<Answers, AnswerDto>().ReverseMap();
+            CreateMap<AddAnswerDto,Answers >()
+                .AfterMap((src, dest) =>
+                {
+                    dest.Id = Guid.NewGuid();
+                });
+            
         }
     }
 }

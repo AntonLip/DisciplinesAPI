@@ -7,5 +7,6 @@ namespace DisciplinesAPI.Models.DTOModels.Test
     public class TestDto
     {
         List<QuestionsDto> QuestionsDtos { get; set; }
+
     }
 }
