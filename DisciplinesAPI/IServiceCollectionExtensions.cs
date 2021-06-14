@@ -26,6 +26,13 @@ namespace DisciplinesAPI
             services.AddTransient<ILessonRepository, LessonRepository>();
             services.AddTransient<ILessonService, LessonService>();
         }
+        public static void AddTestTransient(this IServiceCollection services)
+        {
+            services.AddTransient<IAnswersRepository, AnswersRepository>();
+            services.AddTransient<IQuestionRepository, QuestionsRepository>();
+            services.AddTransient< IQuestionsService, QuestionService >();
+
+        }
     }
 }
 

@@ -33,6 +33,7 @@ namespace DisciplinesAPI.Services
                 throw new ArgumentNullException();
 
             var model = _mapper.Map<TModel>(modelDto);
+            
             await _repository.AddAsync(model, cancellationToken);
             return _mapper.Map<TModelDto>(model);
         }
@@ -52,14 +53,14 @@ namespace DisciplinesAPI.Services
             return _repository.GetCount();
         }
 
-        public virtual async Task<TModelDto> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        public virtual async Task<TModelUpdateDto> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             if (id == Guid.Empty)
                 throw new ArgumentNullException();
 
             var modelDto = await _repository.GetByIdAsync(id, cancellationToken);
 
-            return modelDto is null ? throw new ArgumentException() : _mapper.Map<TModelDto>(modelDto);
+            return modelDto is null ? throw new ArgumentException() : _mapper.Map<TModelUpdateDto>(modelDto);
         }
 
         public virtual async Task<TModelDto> RemoveAsync(Guid id, CancellationToken cancellationToken = default)

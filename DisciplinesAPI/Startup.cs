@@ -55,6 +55,7 @@ namespace DisciplinesAPI
             services.AddLessonTypeTransient();
             services.AddDisciplinesTransient();
             services.AddLessonTransient();
+            services.AddTestTransient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

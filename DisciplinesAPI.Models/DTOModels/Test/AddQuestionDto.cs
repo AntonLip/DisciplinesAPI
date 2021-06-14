@@ -8,12 +8,10 @@ namespace DisciplinesAPI.Models.DTOModels.Test
     public class AddQuestionDto : IEntityDto<Guid>
 
     {
-        public Guid Id { get; set; }
-
-
-        public List<AnswerDto> Answers { get; set; }
-
-
+        public Guid Id { get; set; } 
         public string Name { get; set; }
+        public Guid DisciplinesId { get; set; }
+        public List<AddAnswerDto> Answers { get; set; }
+       
     }
 }
