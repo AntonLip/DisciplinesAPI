@@ -82,6 +82,10 @@ namespace DisciplinesAPI.Controllers
         public async Task<IActionResult> GetFilesAsync([FromRoute] Guid lessonId,  [FromRoute] string typeFile)
         {
             var result = await _lessonService.GetFiles(lessonId, typeFile);
+            if(result is null)
+                return NotFound();
+
+            
             return File(result.FileBytes, result.FileType, result.FileName);
         }
     }
